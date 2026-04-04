@@ -1,0 +1,4 @@
+interface:
+  display_name: "NBA Game Analysis"
+  short_description: "Build an NBA launch-core game thesis"
+  default_prompt: "Use $nba-game-analysis to build the NBA game thesis for this setup."

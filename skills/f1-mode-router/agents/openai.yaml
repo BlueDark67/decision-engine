@@ -1,0 +1,4 @@
+interface:
+  display_name: "F1 Mode Router"
+  short_description: "Route F1 setups into timing modes"
+  default_prompt: "Use $f1-mode-router to route this Formula 1 setup into the correct timing mode."

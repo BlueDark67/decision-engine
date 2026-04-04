@@ -1,0 +1,4 @@
+interface:
+  display_name: "F1 Weekend Analysis"
+  short_description: "Build an F1 thesis by timing mode"
+  default_prompt: "Use $f1-weekend-analysis to build the Formula 1 thesis for this timing mode."

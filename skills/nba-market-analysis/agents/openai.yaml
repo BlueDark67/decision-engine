@@ -1,0 +1,4 @@
+interface:
+  display_name: "NBA Market Analysis"
+  short_description: "Translate an NBA read into markets"
+  default_prompt: "Use $nba-market-analysis to translate this NBA read into market logic."

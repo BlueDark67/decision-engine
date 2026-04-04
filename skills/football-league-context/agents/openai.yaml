@@ -1,0 +1,4 @@
+interface:
+  display_name: "Football League Context"
+  short_description: "Classify football coverage strength"
+  default_prompt: "Use $football-league-context to classify the football coverage mode for this setup."

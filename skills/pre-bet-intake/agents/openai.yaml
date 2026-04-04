@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pre-Bet Intake"
+  short_description: "Normalize a betting request first"
+  default_prompt: "Use $pre-bet-intake to normalize this betting request before analysis."

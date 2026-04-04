@@ -1,0 +1,4 @@
+interface:
+  display_name: "NBA Schedule And Rotation Context"
+  short_description: "Audit NBA rest, travel, and rotation"
+  default_prompt: "Use $nba-schedule-and-rotation-context to audit NBA schedule and rotation context."

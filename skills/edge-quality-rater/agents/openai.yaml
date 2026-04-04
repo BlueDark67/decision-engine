@@ -1,0 +1,4 @@
+interface:
+  display_name: "Edge Quality Rater"
+  short_description: "Rate whether the edge is truly clear"
+  default_prompt: "Use $edge-quality-rater to rate the edge quality in this betting setup."

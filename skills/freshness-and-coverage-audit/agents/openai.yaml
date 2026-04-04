@@ -1,0 +1,4 @@
+interface:
+  display_name: "Freshness And Coverage Audit"
+  short_description: "Review freshness and coverage fit"
+  default_prompt: "Use $freshness-and-coverage-audit to review freshness and coverage fit for this setup."

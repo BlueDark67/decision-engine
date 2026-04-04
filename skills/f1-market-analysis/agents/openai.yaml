@@ -1,0 +1,4 @@
+interface:
+  display_name: "F1 Market Analysis"
+  short_description: "Translate an F1 read into markets"
+  default_prompt: "Use $f1-market-analysis to translate this Formula 1 read into market logic."

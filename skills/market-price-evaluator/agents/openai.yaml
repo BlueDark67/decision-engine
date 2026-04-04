@@ -1,0 +1,4 @@
+interface:
+  display_name: "Market Price Evaluator"
+  short_description: "Test price fit against the thesis"
+  default_prompt: "Use $market-price-evaluator to test whether the current price still fits the thesis."

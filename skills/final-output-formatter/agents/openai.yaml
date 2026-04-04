@@ -1,0 +1,4 @@
+interface:
+  display_name: "Final Output Formatter"
+  short_description: "Render the final project output schema"
+  default_prompt: "Use $final-output-formatter to render this analysis in the project output schema."

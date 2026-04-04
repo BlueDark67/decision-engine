@@ -1,0 +1,4 @@
+interface:
+  display_name: "Data Quality Rater"
+  short_description: "Rate data quality for the setup"
+  default_prompt: "Use $data-quality-rater to rate the data quality for this betting setup."

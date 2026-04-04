@@ -1,0 +1,4 @@
+interface:
+  display_name: "Football Match Analysis"
+  short_description: "Build a league-aware football thesis"
+  default_prompt: "Use $football-match-analysis to build the football thesis for this setup."

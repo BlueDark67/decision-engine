@@ -1,0 +1,4 @@
+interface:
+  display_name: "Decision Gate"
+  short_description: "Return the project verdict cleanly"
+  default_prompt: "Use $decision-gate to return the correct project verdict for this setup."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Red Flag Audit"
+  short_description: "Audit the thesis for veto-level red flags"
+  default_prompt: "Use $red-flag-audit to audit this betting thesis for major red flags."

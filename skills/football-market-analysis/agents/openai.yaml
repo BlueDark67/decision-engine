@@ -1,0 +1,4 @@
+interface:
+  display_name: "Football Market Analysis"
+  short_description: "Translate a football read into markets"
+  default_prompt: "Use $football-market-analysis to translate this football read into market logic."

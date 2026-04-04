@@ -1,0 +1,4 @@
+interface:
+  display_name: "Input Completeness Check"
+  short_description: "Check whether required inputs exist"
+  default_prompt: "Use $input-completeness-check to audit the required inputs for this betting setup."
