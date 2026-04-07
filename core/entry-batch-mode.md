@@ -47,6 +47,7 @@ Entry batch mode must support both of these styles:
 - no `candidate_id`
 - no explicit field labels
 - one block per entry, typically containing selection, odd, market, event, kickoff, and an entry timestamp near `Details`
+- for player props, the block may also expose player identity, prop line, prop side, or book wording variants that must be normalized instead of discarded
 
 The system should not require the user to manually fetch tracker ids when the bookmaker paste already contains enough identifying information.
 
@@ -61,6 +62,16 @@ If `candidate_id` is missing, the system must attempt a strict fallback match us
 - `hora_entrada`
 
 If the fallback match is ambiguous, do not promote the entry silently. Keep the ambiguity explicit.
+
+If the row is a player prop, fallback matching should instead prefer:
+
+- `data_jogo`
+- `evento`
+- `prop_player`
+- `prop_type`
+- `prop_line`
+- `prop_side`
+- `hora_entrada`
 
 ## Parsing rule
 Inside the entry batch envelope:
@@ -85,6 +96,16 @@ When the message is a bookmaker paste, the system should read the entry block co
 8. entry timestamp
 
 If one of these fields is missing or displaced, keep the uncertainty explicit instead of forcing a match.
+
+When the bookmaker paste is a player prop, the system should also try to isolate:
+
+1. player name
+2. prop type
+3. prop line
+4. over or under side
+5. event
+6. kickoff
+7. optional book wording or timestamp details
 
 ## Example structured style
 ```text
@@ -146,6 +167,9 @@ Before fallback matching, the system should normalize:
 - common side labels such as `yes` -> `Yes`
 - event names and team naming variants where the matchup is clearly the same
 - day/month timestamps into the active year when the surrounding context supports it
+- prop labels such as `Points` -> `PTS`, `Assists` -> `AST`, `Rebounds` -> `REB`, `Points + Assists` -> `PA`, `Points + Rebounds` -> `PR`, `Points + Rebounds + Assists` -> `PRA`, `Made Threes` / `3-pointers made` -> `3PM`
+- prop sides such as `Over`, `Under`, `Mais de`, or `Menos de` into the controlled tracker labels
+- player naming variants where the identity is clearly the same
 
 ## Eligibility rule
 Do not promote a candidate if:

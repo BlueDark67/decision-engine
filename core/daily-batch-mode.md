@@ -20,6 +20,7 @@ Examples:
 - `0.5+ golos equipa Sporting`
 - `Vence Fluminense`
 - `Ambas marcam jogo Wrexham`
+- `Jalen Brunson over 8.5 assists`
 
 These lines are raw prompts for disciplined evaluation. They do not bypass intake, data checks, price discipline, or the decision gate.
 
@@ -49,6 +50,13 @@ Inside the batch envelope:
 - each non-empty line beginning with `-` is one candidate
 - the candidate text should be preserved without inventing missing fields
 - malformed lines should be kept explicit instead of silently normalized into certainty
+
+If the candidate is clearly an NBA player prop, the intake packet should also preserve, when available:
+
+- `prop_player`
+- `prop_type`
+- `prop_line`
+- `prop_side`
 
 ## Quick-triage objective
 The purpose of daily batch mode is not to finalize a bet immediately. It is to:
@@ -89,6 +97,7 @@ A candidate row in the tracker becomes a final entry only after a later recheck 
 - Never create a substitute local file if the tracker is unavailable.
 - If the trigger is not active, do not write to the tracker.
 - If the tracker cannot be reached, make the limitation explicit and stop the sync layer.
+- When the candidate is a player prop, write the prop fields into the tracker and leave them blank for non-prop rows.
 
 ## Output policy
 When this mode is active, a compact batch-processing summary is acceptable in chat, provided that the structured candidate records are written to the tracker and any later promoted final entry uses the project output schema.

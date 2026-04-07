@@ -25,8 +25,16 @@ Use it for:
 - price checks
 - recheck timing
 - active flow status
+- quick prop context when the open item is an NBA player prop
 
 This page is operational, not historical. It may be rewritten from the current active set.
+
+When the active item is an NBA player prop, the panel should also carry:
+- `prop_player`
+- `prop_type`
+- `prop_line`
+- `prop_side`
+- `prop_book`
 
 ### `Base_Analises`
 Primary historical table for candidate setups created from daily list intake.
@@ -52,6 +60,12 @@ Minimum write fields:
 - `kickoff`
 - `market`
 - `side`
+- `prop_player`
+- `prop_type`
+- `prop_line`
+- `prop_side`
+- `prop_book`
+- `prop_context_notes`
 - `analysis_mode`
 - `data_quality`
 - `edge_quality`
@@ -89,6 +103,12 @@ Minimum write fields:
 - `event`
 - `market`
 - `side`
+- `prop_player`
+- `prop_type`
+- `prop_line`
+- `prop_side`
+- `prop_book`
+- `prop_context_notes`
 - `odd_entrada`
 - `odd_timestamp`
 - `analysis_mode`
@@ -112,6 +132,11 @@ Do not use it as the primary write target for operational rows.
 ### `Config`
 Reference page for allowed values and tracker conventions.
 
+It should include the controlled value sets used by prop rows, especially:
+- supported `prop_type` values
+- supported `prop_side` values
+- allowed `analysis_mode` values including `NBA props restricted scope`
+
 ## Row policy
 ### New daily batch
 - append new candidate rows to `Base_Analises`
@@ -121,6 +146,11 @@ Reference page for allowed values and tracker conventions.
 ### Candidate re-evaluation
 - update the existing `Base_Analises` row for that `candidate_id`
 - keep the raw suggestion and historical identity stable
+- if the market is a player prop, keep the prop identity stable across updates:
+  - `prop_player`
+  - `prop_type`
+  - `prop_line`
+  - `prop_side`
 
 ### Promotion to final entry
 - append a new row to `Base_Entradas`
@@ -140,6 +170,8 @@ This means:
 - final stability note
 
 should reflect the moment of approval and should not be silently rewritten by later changes in the candidate row.
+
+For non-prop rows, the prop-specific fields should remain blank.
 
 ## Active-panel rule
 `Painel_Ativo` may contain a filtered or rewritten view of non-closed candidates.
@@ -171,3 +203,14 @@ In entry batch mode, fallback matching should prefer a normalized operational tu
 - kickoff
 
 and then use entry-time or price fields only as secondary disambiguation when needed.
+
+If the row is an NBA player prop, fallback matching should prefer a prop-aware tuple built from:
+
+- event
+- prop_player
+- prop_type
+- prop_line
+- prop_side
+- kickoff
+
+and then use book, entry-time, or price fields only as secondary disambiguation when needed.
