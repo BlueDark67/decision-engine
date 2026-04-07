@@ -1,0 +1,4 @@
+interface:
+  display_name: "Entry Batch Promotion"
+  short_description: "Promote multiple confirmed entries into the tracker"
+  default_prompt: "Use $entry-batch-promotion to process this confirmed-entry batch and sync the fixed Google Sheets tracker."

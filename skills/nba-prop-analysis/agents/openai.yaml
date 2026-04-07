@@ -1,0 +1,4 @@
+interface:
+  display_name: "NBA Prop Analysis"
+  short_description: "Build a disciplined NBA prop thesis"
+  default_prompt: "Use $nba-prop-analysis to build the NBA player prop thesis for this setup."

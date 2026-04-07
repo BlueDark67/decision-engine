@@ -1,6 +1,8 @@
 # sports/nba/workflow.md
 
 ## Main workflow
+This file governs the NBA core game-market flow.
+
 1. Define event, market, side, and price.
 2. Audit the injury report, projected starters, and rotation context.
 3. Assess rest, travel, and back-to-back status.
@@ -26,3 +28,6 @@
 - important role change not addressed
 - very short sample dominating the thesis
 - narrative without matchup support
+
+## Props routing rule
+If the market is a player prop, switch to the dedicated props workflow instead of using this core game-market flow.

@@ -10,7 +10,7 @@ Read `../../sports/nba/markets.md` and `../../core/edge-quality.md`.
 ## Workflow
 1. Match the NBA thesis to the selected market.
 2. Check whether the same logic really supports that market.
-3. Keep props outside the core launch flow unless explicitly handled as restricted secondary scope.
+3. Route player props to the dedicated NBA props workflow instead of treating them as core launch markets.
 4. Make the market case concise and operational.
 
 ## Return

@@ -14,6 +14,42 @@ Any analysis should try to collect:
 - price timestamp
 - event time
 
+## Daily batch envelope fields
+When daily batch mode is active, the system should also collect:
+
+- raw message
+- received time
+- batch id
+- one raw candidate line per bullet
+- inferred games date, when available
+
+## Entry batch envelope fields
+When entry batch mode is active, the system should try to collect for each entry block:
+
+- candidate id
+- odd_entrada
+- hora_entrada
+- observacoes, when provided
+
+When the source is a raw bookmaker paste, the system should also try to collect:
+
+- side from the first line of the block
+- market from the market label line
+- event from the matchup line
+- kickoff from the event-time line
+- ignore payout-only lines
+- entry timestamp from the line after `Details`, when present
+
+Fallback matching fields when candidate id is missing:
+
+- event date
+- event
+- market
+- side
+- kickoff
+- odd_entrada
+- hora_entrada
+
 ## Baseline inputs by category
 ### Market
 - exact market
@@ -51,6 +87,19 @@ Any analysis should try to collect:
 - injury report with timestamp
 - projected starters or rotation context
 - rest and travel
+
+### NBA Props (restricted secondary scope)
+- player
+- teams
+- tipoff
+- prop type
+- side (`over` or `under`)
+- line and price
+- price timestamp
+- injury report with timestamp
+- projected role and minutes
+- rotation context
+- matchup context relevant to the prop family
 
 ### F1
 - event

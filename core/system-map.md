@@ -20,6 +20,9 @@ Normalizes the request:
 - time
 - analysis objective
 
+When daily batch mode is active, Intake must first normalize the batch envelope and split the list into one candidate packet per bullet line before continuing through the core candidate by candidate.
+When entry batch mode is active, Intake must first split the message into entry blocks and match them to existing candidate rows before promotion.
+
 ### 2. Input Audit
 Checks:
 
@@ -68,6 +71,7 @@ Forces the final response into the project schema.
 - rest, travel, and schedule
 - matchup and style
 - translation into core markets
+- restricted secondary workflow for player props
 
 ### F1
 - structural timing mode

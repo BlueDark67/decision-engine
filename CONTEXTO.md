@@ -31,6 +31,16 @@ The project should help:
 - spread
 - game total
 
+## Restricted secondary scope
+### NBA player props
+- over/under points (`PTS`)
+- over/under assists (`AST`)
+- over/under rebounds (`REB`)
+- over/under points + assists (`PA`)
+- over/under points + rebounds (`PR`)
+- over/under points + rebounds + assists (`PRA`)
+- over/under made threes (`3PM`)
+
 ### F1
 - qualifying H2H
 - race H2H
@@ -39,11 +49,17 @@ The project should help:
 - winner and podium only selectively
 
 ## Outside the launch core
-- NBA props
 - automations
 - APIs
 - automated live fetching
 - proprietary projection models
+
+## Operational tracking layer
+- a fixed Google Sheets tracker may be used as an operational layer
+- this tracker stores daily candidates, active watchlist items, and final entries
+- it does not replace the core analysis or turn the system into automated live fetching
+- it must reuse the same file instead of creating daily spreadsheets
+- final entries may also be reported in batch through a dedicated entry-promotion trigger
 
 ## Inputs the system should be able to accommodate
 Even without automated implementation, the system should be ready to work with:

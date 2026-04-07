@@ -23,6 +23,9 @@ Before producing any analysis, Codex must consult these files in this order:
 11. `core/red-flags.md`
 12. `core/decision-gate.md`
 13. `core/output-template.md`
+14. `core/daily-batch-mode.md`
+15. `core/google-sheet-tracker.md`
+16. `core/entry-batch-mode.md`
 
 After that, it must consult the relevant sport-specific module:
 
@@ -38,6 +41,7 @@ The system was designed using a balanced approach:
 - a shared core for intake, data quality, edge, risk, red flags, gate, and output
 - sport-specific modules for football, NBA, and F1
 - market-oriented decisions, without implementing APIs or automated data fetching
+- an optional fixed Google Sheets operational tracker for daily candidate intake and final entry history
 
 ## Required operating order
 No analysis may skip steps. The base order is:
@@ -53,6 +57,8 @@ No analysis may skip steps. The base order is:
 9. Decision gate
 10. Final output
 
+When daily batch mode is active, the system must first detect the batch envelope, split it into candidate setups, and then run the same base order for each candidate.
+
 ## Required separations
 Codex must explicitly separate:
 
@@ -62,10 +68,31 @@ Codex must explicitly separate:
 
 These three dimensions must never be merged.
 
+## Daily batch tracker mode
+For the special daily-list workflow:
+
+- only activate it when the trimmed raw message starts with `Análises do dia:` and ends with `Abraço`
+- treat each bullet as a candidate setup, not a final entry
+- reuse the fixed Google Sheets tracker defined in `core/google-sheet-tracker.md`
+- never create a new daily spreadsheet
+- quick triage may populate odds range, checks, and watchlist status, but final entry still requires a later recheck
+
+## Entry batch promotion mode
+For reporting one or more entries already taken:
+
+- only activate it when the trimmed raw message starts with `Entradas feitas:`
+- no closing phrase is required
+- prefer `candidate_id` as the matching key
+- accept raw bookmaker-paste entry blocks when event, market, side, and timing are sufficient for conservative matching
+- promote matched rows into `Base_Entradas`
+- update the candidate row instead of creating a new candidate
+
 ## Sport-specific structural rules
 - Football: use league-aware logic. Distinguish between `strong-stat-coverage` and `weak-stat-coverage` environments.
 - Football: use xG-centered reasoning only when the environment supports it.
-- NBA: keep props outside the launch core. Treat them as restricted secondary scope.
+- NBA: keep moneyline, spread, and game total as the launch core.
+- NBA: player props must run through the restricted secondary module, not the core game-market workflow.
+- NBA: supported prop markets in restricted scope are over/under `PTS`, `AST`, `REB`, `PA`, `PR`, `PRA`, and `3PM`.
 - F1: treat `pre-practice`, `post-practice`, `post-qualifying`, and `pre-race` as structurally different modes.
 
 ## Core red flags

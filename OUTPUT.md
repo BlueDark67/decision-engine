@@ -1,7 +1,14 @@
 # OUTPUT.md
 
 ## Mandatory rule
-Whenever the task involves bet analysis, this format must be followed unless the user explicitly instructs otherwise.
+Whenever the task involves a standalone bet analysis or a final entry decision, this format must be followed unless the user explicitly instructs otherwise.
+
+## Operational batch exception
+When daily batch mode or entry batch mode is active:
+
+- the system may return a compact batch-processing summary instead of one full schema per candidate
+- the structured candidate fields must still be written to the fixed tracker
+- if a candidate is later promoted to a final entry during a normal analysis flow, the full schema becomes mandatory for that entry
 
 ## Required final schema
 Every final response must include these fields:

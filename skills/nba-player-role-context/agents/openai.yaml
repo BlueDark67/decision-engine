@@ -1,0 +1,4 @@
+interface:
+  display_name: "NBA Player Role Context"
+  short_description: "Audit role and minutes for NBA props"
+  default_prompt: "Use $nba-player-role-context to assess role and minutes stability for this NBA prop."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Daily Batch Tracker Sync"
+  short_description: "Parse daily list messages and sync the fixed tracker"
+  default_prompt: "Use $daily-batch-tracker-sync to process this daily list and sync the fixed Google Sheets tracker."

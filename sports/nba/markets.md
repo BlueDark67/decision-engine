@@ -22,3 +22,5 @@ Focus on:
 
 ## Rule
 Do not project a spread edge automatically onto the total, or the reverse.
+
+For player props, use the dedicated props market file.

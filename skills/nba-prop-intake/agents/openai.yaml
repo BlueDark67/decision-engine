@@ -1,0 +1,4 @@
+interface:
+  display_name: "NBA Prop Intake"
+  short_description: "Normalize an NBA player prop request"
+  default_prompt: "Use $nba-prop-intake to normalize this NBA prop request before analysis."

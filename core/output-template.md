@@ -3,12 +3,16 @@
 ## Objective
 This document details how to fill the final schema.
 
+## Operational batch note
+In daily batch mode or entry batch mode, this template remains mandatory for any single-candidate analysis explicitly rendered in chat. A compact operational summary is acceptable only when the structured tracker writes are completed correctly.
+
 ## Fields
 ### `Analysis Mode`
 Identify the mode used:
 
 - football `strong-stat-coverage` or `weak-stat-coverage`
 - NBA core workflow
+- NBA props restricted scope
 - applicable F1 timing mode
 
 ### `Key Supporting Factors`

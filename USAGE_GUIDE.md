@@ -36,9 +36,99 @@
 
 - "Quero analisar Celtics vs Bucks no spread. Estou a olhar para Celtics -4.5 a 1.91. Os Bucks jogam em back-to-back e ha duvida sobre um titular."
 
+### Exemplo de pedido para NBA props
+
+- "Quero analisar Jalen Brunson over 8.5 assistencias em Knicks vs Heat. Estou a olhar para 1.87. Preciso de confirmar minutos, role e quem joga ao lado dele."
+
 ### Exemplo alternativo para F1
 
 - "Quero analisar o qualifying H2H entre Leclerc e Russell em Monza. O preco atual do Leclerc e 1.85. Ainda faltam confirmacoes finais de condicoes da pista."
+
+### Formato especial para listas diarias
+
+- Se a mensagem comecar exatamente por `Análises do dia:` e terminar exatamente com `Abraço`, o sistema entra em modo de lote diario.
+- Nesse modo, cada linha com `-` e tratada como uma candidata separada.
+- O sistema faz triagem rapida, define faixa de odd, checks necessarios e estado inicial.
+- O sistema reutiliza sempre o mesmo Google Sheets tracker.
+- O sistema nao cria um ficheiro novo por dia.
+
+### Exemplo de lote diario
+
+```text
+Análises do dia:
+
+-Empate anula Bayern
+
+-0.5+ golos equipa Sporting
+
+-Vence Fluminense
+
+-Ambas marcam jogo Wrexham
+
+-Empate anula Nordajaelland
+
+Abraço
+```
+
+### Formato especial para entradas ja feitas
+
+- Se a mensagem comecar exatamente por `Entradas feitas:`, o sistema entra em modo de promocao de entradas.
+- Neste modo, o objetivo ja nao e criar candidatas novas.
+- O sistema tenta encontrar as candidatas existentes e promovê-las para `Base_Entradas`.
+- Nao precisa de terminar com nenhuma frase especial.
+- O campo recomendado para ligar tudo sem ambiguidade e `candidate_id`.
+- Mas o sistema tambem deve aceitar o formato cru copiado da casa de apostas, sem ires buscar ids manualmente.
+
+### Exemplo de lote de entradas
+
+```text
+Entradas feitas:
+
+- Sporting over 0.5
+candidate_id: CAND-20260407-001
+odd_entrada: 1.47
+hora_entrada: 2026-04-07 18:10
+observacoes: linha mantida dentro da faixa
+
+- Bayern dnb
+candidate_id: CAND-20260407-002
+odd_entrada: 1.71
+hora_entrada: 2026-04-07 19:02
+```
+
+### Exemplo de lote de entradas em formato cru
+
+```text
+Entradas feitas:
+
+Bayern Munich
+1.74
+Draw no bet
+Real Madrid vs Bayern Munich
+07/04, 20:00
+Possible payout: EUR 0.87
+
+Details
+07/04, 08:25
+
+yes
+1.63
+Both teams to score
+Wrexham AFC vs Southampton FC
+07/04, 20:00
+
+Possible payout: EUR 0.81
+
+Details
+07/04, 08:26
+```
+
+Neste caso, o sistema deve tentar ligar automaticamente cada bloco usando sobretudo:
+- evento
+- mercado
+- lado
+- hora do jogo
+- hora da entrada
 
 ---
 
@@ -51,6 +141,8 @@
 
 - O sistema organiza o pedido.
 - Identifica o evento, o mercado, o lado, o preco e o objetivo da analise.
+- Em modo de lote diario, primeiro identifica o envelope do lote, cria um batch e divide as linhas em candidatas.
+- Em modo de promocao de entradas, primeiro divide a mensagem em blocos de entrada e tenta ligar cada bloco a uma candidata existente.
 
 ### 2. Validacao dos dados
 
@@ -86,6 +178,8 @@
 
 - O sistema devolve uma resposta estruturada.
 - Essa resposta mostra nao apenas a conclusao, mas tambem a base que levou a essa conclusao.
+- Em modo de lote diario, pode devolver um resumo compacto do processamento, desde que os campos estruturados fiquem no tracker.
+- Em modo de promocao de entradas, pode devolver um resumo compacto das entradas promovidas e dos bloqueios de correspondencia.
 
 ---
 
@@ -103,6 +197,7 @@
 
 - `Evento`: equipas, jogo, GP, confronto ou corrida.
 - `Mercado`: exatamente qual e o mercado que queres analisar.
+- Para NBA props, indicar tambem o jogador e o tipo de prop (`PTS`, `AST`, `REB`, `PA`, `PR`, `PRA`, `3PM`).
 - `Odds + timestamp`: o preco atual e, se possivel, quando foi visto.
 - `Contexto`: lesoes, forma recente, rotacao, lineup, penalties, weather, descanso, travel ou outro fator relevante.
 
@@ -112,6 +207,7 @@
 - Menos contexto tende a aumentar a incerteza.
 - Falta de dados pode levar a `insufficient data`.
 - Se o contexto estiver incompleto mas puder ser confirmado mais tarde, o sistema pode devolver `watchlist`.
+- Em lote diario, a falta de contexto nao autoriza inventar certeza. O sistema deve manter os campos em falta explicitos no tracker.
 
 ---
 
