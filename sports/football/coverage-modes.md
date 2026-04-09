@@ -1,5 +1,8 @@
 # sports/football/coverage-modes.md
 
+Coverage classification source: see `sports/football/league-registry.md`.
+Data-quality constraint source: see `core/data-quality.md`.
+
 ## Strong-Stat-Coverage
 Use when:
 
@@ -33,3 +36,15 @@ In `weak-stat-coverage`, the read should rely more on:
 
 ## Rule
 A heavily xG-driven thesis in `weak-stat-coverage` is a red flag.
+
+## Coverage-to-quality mapping
+| league_coverage_mode | data_quality_ceiling |
+| --- | --- |
+| `strong-stat-coverage` | `strong` (no ceiling applied) |
+| `moderate-stat-coverage` | `usable` (max) |
+| `weak-stat-coverage` | `weak` (max) |
+| `no-stat-coverage` | `insufficient` (forced) |
+
+## Ceiling rule
+If observed evidence suggests a better score than the coverage ceiling, keep the ceiling.
+Only a justified manual override may lift a ceiling, and it must document why the market-specific data quality is structurally stronger than league baseline.

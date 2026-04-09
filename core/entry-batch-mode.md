@@ -61,7 +61,20 @@ If `candidate_id` is missing, the system must attempt a strict fallback match us
 - `odd_entrada`
 - `hora_entrada`
 
-If the fallback match is ambiguous, do not promote the entry silently. Keep the ambiguity explicit.
+If the fallback match is ambiguous, never silently skip the promotion attempt.
+
+Required ambiguous-match interaction:
+
+1. rank and present the 2 to 3 closest candidate rows
+2. ask the user to choose one explicit option
+3. allow a "create new entry" fallback option
+
+Required prompt:
+
+Não consigo identificar a entrada com certeza. Corresponde a qual destas?
+[1] [candidate details]
+[2] [candidate details]
+[3] Nenhuma das anteriores — criar nova entrada
 
 If the row is a player prop, fallback matching should instead prefer:
 
@@ -149,6 +162,58 @@ Details
 07/04, 08:26
 ```
 
+## Supported Bookmaker Slip Formats
+### Pinnacle
+```text
+Entradas feitas:
+
+Real Madrid -1.0
+1.91
+Asian Handicap
+Real Madrid vs Sevilla
+09/04, 20:00
+Risk: EUR 50.00
+
+Bet placed
+09/04, 14:22
+```
+
+### Betfair Exchange
+```text
+Entradas feitas:
+
+Selection: Over 2.5 Goals
+Market: Over/Under 2.5 Goals
+Event: Liverpool v Arsenal
+Odds: 1.84
+Matched: EUR 60.00
+Date: 09/04 15:10
+```
+
+### Bet365
+```text
+Entradas feitas:
+
+Yes
+1.72
+Both Teams To Score
+Wolves v Brighton
+09/04, 19:45
+Stake: EUR 40.00
+
+Details
+09/04, 12:03
+```
+
+### Generic (fallback)
+```text
+Event: [event name]
+Market: [market]
+Selection: [selection]
+Odds: [price]
+Stake: [amount]
+```
+
 ## Required processing order
 1. Detect the entry batch trigger.
 2. Detect whether the body is structured style or raw bookmaker-paste style.
@@ -179,6 +244,8 @@ Do not promote a candidate if:
 - the candidate was closed or discarded in a conflicting way
 - the reported entry details are incomplete for snapshot purposes
 - the bookmaker-paste block cannot be normalized with enough confidence
+
+If ambiguity remains after closest-candidate prompt, keep the block pending and explicit instead of dropping it silently.
 
 ## Snapshot rule
 The row written to `Base_Entradas` must preserve the approval-time snapshot:

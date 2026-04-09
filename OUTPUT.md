@@ -1,5 +1,9 @@
 # OUTPUT.md
 
+-> For tone and language rules, see `ESTILO.md`
+-> For quality scale definitions, see `core/quality-matrix.md`
+-> For verdict rules, see `core/decision-gate.md`
+
 ## Mandatory rule
 Whenever the task involves a standalone bet analysis or a final entry decision, this format must be followed unless the user explicitly instructs otherwise.
 
@@ -28,6 +32,7 @@ Every final response must include these fields:
 13. `Why This Verdict`
 14. `What Could Change The Verdict`
 15. `Stability / Confidence Note`
+16. `schema_version`
 
 ## Base template
 ```md
@@ -79,6 +84,9 @@ Every final response must include these fields:
 
 ## Stability / Confidence Note
 [short note]
+
+## schema_version
+[current version, e.g. "2.0"]
 ```
 
 ## Output rules

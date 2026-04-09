@@ -11,6 +11,18 @@ This mode activates only when the raw user message, after trimming outer whitesp
 
 If either boundary is missing, daily batch mode must not activate.
 
+## Fuzzy trigger detection
+If the exact trigger is not matched, run a fuzzy check before refusing batch mode.
+
+Fuzzy check condition:
+- the message contains 3 or more candidate-like sport lines in the format `[sport] [event] [market]`
+- but the exact trigger boundaries are not both present
+
+Required response when fuzzy check is positive:
+
+Parece que estás a enviar um batch mas o trigger não foi detectado.
+Confirmas que queres activar o Daily Batch Mode? (começa com 'Análises do dia:' e termina com 'Abraço')
+
 ## Central interpretation rule
 In this mode, each bullet line is a candidate setup, not a final entry.
 
@@ -44,12 +56,32 @@ Blank spacer lines should be ignored. Each candidate line must preserve the orig
 6. Write or update tracker rows in the fixed Google Sheets file.
 7. Promote to final entry only later, after recheck near game time.
 
+## Batch size warning
+If candidate count is greater than 8, warn before processing starts:
+
+Este batch tem [N] candidatas. Para manter qualidade de análise, recomendo processar em grupos de 6-8.
+Continuar com todas de uma vez? (S/N)
+
+Only continue with all candidates at once after explicit user confirmation.
+
 ## Parsing rule
 Inside the batch envelope:
 
 - each non-empty line beginning with `-` is one candidate
 - the candidate text should be preserved without inventing missing fields
 - malformed lines should be kept explicit instead of silently normalized into certainty
+
+## Inline odd parsing
+Supported candidate-line formats:
+
+- Standard: `Sporting - Benfica BTTS`
+- With odd: `Sporting - Benfica BTTS @ 1.85`
+- With note: `Sporting - Benfica BTTS @ 1.85 (Pinnacle)`
+
+Parsing actions:
+- if odd is present in-line, pre-populate `price` in the candidate output packet
+- if bookmaker note is present, write it into `observacoes`
+- if odd parsing is ambiguous, keep the raw text and mark price as unresolved instead of guessing
 
 If the candidate is clearly an NBA player prop, the intake packet should also preserve, when available:
 
@@ -73,6 +105,22 @@ Even in fast mode, the system must still:
 - keep missing fields explicit
 - avoid narrative agreement without support
 - prefer `watchlist` or `insufficient data` when the base is weak
+
+## Quick Triage vs Full Analysis
+Full Analysis steps:
+intake -> freshness-audit -> data-quality -> sport-module (full) -> market-evaluation -> edge-quality -> risk-load -> red-flags -> decision-gate -> output
+
+Quick Triage omits:
+- deep H2H historical analysis (surface-level only)
+- full market comparison across bookmakers
+- detailed injury context beyond confirmed absences
+
+Quick Triage always includes (never skip):
+- data-quality assessment
+- edge-quality assessment
+- risk-load assessment
+- decision-gate
+- all 15 output fields (some may be shorter)
 
 ## Price rule
 A candidate may look valid in principle and still fail on price.

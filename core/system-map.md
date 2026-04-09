@@ -3,6 +3,8 @@
 ## Objective
 This document defines the structural map of the system.
 
+For agent order, see `agents/INDEX.md`.
+
 ## Balanced architecture
 The system follows a balanced model:
 

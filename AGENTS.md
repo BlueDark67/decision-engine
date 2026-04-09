@@ -1,11 +1,26 @@
 # AGENTS.md
 
+## STARTUP CHECKLIST (verify before any analysis)
+1. [ ] AGENTS.md loaded
+2. [ ] core/system-map.md loaded
+3. [ ] core/intake-agent.md loaded
+4. [ ] core/data-quality.md loaded
+5. [ ] core/edge-quality.md loaded
+6. [ ] core/risk-load.md loaded
+7. [ ] core/decision-gate.md loaded
+8. [ ] OUTPUT.md loaded
+9. [ ] ESTILO.md loaded
+10. [ ] Correct sport module loaded
+11. [ ] Google Sheets tracker loaded (if batch mode)
+
 ## Purpose
 This file is the entry point for the project. The project is not a programming repository. It is a structured analysis and decision-support system for sports betting.
 
 Core system question:
 
 > Should I enter this bet or not, and why?
+
+For agent order, see `agents/INDEX.md`.
 
 ## Required reading
 Before producing any analysis, Codex must consult these files in this order:
@@ -48,6 +63,7 @@ No analysis may skip steps. The base order is:
 
 1. Intake
 2. Input audit
+Step 2 of every analysis pipeline is mandatory execution of `skills/freshness-and-coverage-audit`. This step cannot be skipped regardless of analysis type or mode.
 3. Data quality assessment
 4. Sport-specific analysis
 5. Market evaluation
@@ -72,9 +88,13 @@ These three dimensions must never be merged.
 For the special daily-list workflow:
 
 - only activate it when the trimmed raw message starts with `Análises do dia:` and ends with `Abraço`
+- if exact boundaries are missing but 3 or more sport-like candidate lines are detected, ask for confirmation with the defined fuzzy-trigger prompt in `core/daily-batch-mode.md`
 - treat each bullet as a candidate setup, not a final entry
 - reuse the fixed Google Sheets tracker defined in `core/google-sheet-tracker.md`
 - never create a new daily spreadsheet
+- apply quick-triage scope exactly as defined in `core/daily-batch-mode.md` (including never-skip steps and omitted deep checks)
+- if candidate count is greater than 8, issue the batch-size warning and require explicit confirmation before processing all at once
+- support inline odd parsing in candidate lines (`@ odd` and optional bookmaker note in parentheses), mapping odd to `price` and bookmaker note to `observacoes`
 - quick triage may populate odds range, checks, and watchlist status, but final entry still requires a later recheck
 
 ## Entry batch promotion mode

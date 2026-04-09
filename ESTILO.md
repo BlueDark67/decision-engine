@@ -42,3 +42,21 @@ Every final response must include a short `Stability / Confidence Note`, consist
 - data quality
 - edge quality clarity
 - the weight of risk
+
+## Stability / Confidence Note criteria (objective)
+Use these labels with objective conditions:
+
+### `STABLE`
+- `data_quality = strong`
+- no red flags
+- `analysis_validity` has more than 6 hours remaining
+
+### `MODERATELY STABLE`
+- `data_quality = usable`
+- at most 1 minor red flag
+- `analysis_validity` has more than 3 hours remaining
+
+### `FRAGILE`
+- `data_quality = weak`
+- or at least 1 major red flag
+- or `analysis_validity` has less than 3 hours remaining
